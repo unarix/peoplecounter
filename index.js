@@ -3,6 +3,16 @@ var express = require('express'),
     app = express(),
     port = 3000;
 
+// Lanzo el chrome ni bien levanto la app
+const ChromeLauncher = require('chrome-launcher');
+ChromeLauncher.launch({
+    startingUrl: 'http://localhost:3000/counter',
+    chromeFlags: ['--kiosk']
+}).then(chrome => {
+    console.log(`Chrome debugging port running on ${chrome.port}`);
+});
+
+// Continuo con la carga del resto
 const fs = require('fs');
 const path = require('path');
 const router = express.Router();
