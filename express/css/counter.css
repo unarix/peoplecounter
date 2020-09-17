@@ -51,3 +51,40 @@ html, body{
   width: 100%;
   height: auto;
 }
+
+
+@media (max-height: 800px) {
+    
+  .row_picto{
+    margin-top: 1%;
+    display: inline-block;
+    text-align: center;
+    width: 20%;
+  }
+
+  .row_available{
+    margin-top: 1%;
+    display: inline-block;
+    text-align: center;
+    width: 48%;
+  }
+
+  .row_trad{
+    margin-top: 3%;
+    display: inline-block;
+    text-align: center;
+    width: 65%;
+  }
+
+  .row_ocupation{
+    margin-top: 6%;
+    display: inline-block;
+    text-align: center;
+    width: 45%;
+  }
+
+  .row_porcentaje
+  {
+    font-size: 600%;
+  }
+}
