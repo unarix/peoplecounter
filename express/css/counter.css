@@ -1,0 +1,53 @@
+
+html, body{
+  padding: 0px;
+  margin: 0px;
+  background-image: url("/imgs/background.png");
+  background-size: cover;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
+.container{
+  width: 100%;
+  text-align: center;
+}
+
+.row_picto{
+  margin-top: 10%;
+  display: inline-block;
+  text-align: center;
+  width: 50%;
+}
+
+.row_available{
+  margin-top: 6%;
+  display: inline-block;
+  text-align: center;
+  width: 70%;
+}
+
+.row_trad{
+  margin-top: 5%;
+  display: inline-block;
+  text-align: center;
+  width: 68%;
+}
+
+.row_ocupation{
+  margin-top: 5%;
+  display: inline-block;
+  text-align: center;
+  width: 68%;
+}
+
+.row_porcentaje
+{
+  font-size: 300%;
+}
+
+.responsive {
+  width: 100%;
+  height: auto;
+}

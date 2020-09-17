@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Contador de personas">
+  <meta name="author" content="nhtello - 2020">
+  <link rel="stylesheet" href="css/counter.css">
+  <title>Counter</title>
+</head>
+
+<body id="body_c" style="overflow: hidden;">
+  <div class="container">
+    <div class="row_picto">
+      <img id="type" class="responsive" src="imgs/men.png">
+    </div>
+    <div class="row_available">
+      <img id="available" class="responsive" src="imgs/available_ok.png">
+    </div>
+    <div class="row_trad">
+      <img id="trad" class="responsive" src="imgs/trad_ok.png">
+    </div>
+    <div class="row_ocupation">
+      <img class="responsive" src="imgs/ocupation.png">
+    </div>
+    <div class="row_porcentaje">
+      <div class="porc_texto" id="_porcentaje"></div>
+    </div>
+    <div id="_entradas"></div>
+    <div id="_salidas"></div>
+  </div>  
+</body>
+
+<script>
+
+  setTimeout('getData()', 1000);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const tipo = urlParams.get('type');
+
+  if(tipo!=null)
+  {
+    if(tipo.includes("m"))
+      document.getElementById("type").src = 'imgs/wooman.png';
+  }
+
+  function getData()
+  {
+      var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+    
+    fetch("http://localhost:3000/", requestOptions)
+      .then(response => response.text())
+      .then(function(result) {
+          console.log("ok:", result);
+          llenarTablero(JSON.parse(result));
+        })
+      //.then(result => console.log('respuesta', result))
+      .catch(error => console.log('error', error));
+      
+    setTimeout('getData()', 2000);
+  }
+
+  function llenarTablero(data)
+  {
+    var total = 10;
+
+    var entradas = data.entradas;
+    var salidas = data.salidas;
+    var gente = entradas - salidas;
+    console.log(gente);
+    
+    var porcentaje = ((gente/total) * 100).toFixed(0);
+    console.log(porcentaje);
+    
+    if(porcentaje<0)
+      document.getElementById("_porcentaje").innerHTML = "0%";
+    else
+    {
+      if(porcentaje>99)
+      {
+        document.getElementById("available").src = 'imgs/available_no.png';
+        document.getElementById("trad").src = 'imgs/trad_no.png';
+      }
+      else
+      {
+        document.getElementById("available").src = 'imgs/available_ok.png';
+        document.getElementById("trad").src = 'imgs/trad_ok.png';
+      }
+
+      document.getElementById("_porcentaje").innerHTML = porcentaje + '%';
+    }
+
+    document.getElementById("_entradas").innerHTML = data.entradas;
+    document.getElementById("_salidas").innerHTML = data.salidas;
+  }
+
+</script>
+
+</html>
+
+
+
+
