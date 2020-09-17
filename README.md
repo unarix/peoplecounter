@@ -5,7 +5,7 @@ This project uses camlitycs with a webhook to the root server endpoint to count 
 ## NodeJS
 
 > npm install
-> npm start
+>> npm start
 
 ## Endpoints
 
