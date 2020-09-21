@@ -27,23 +27,43 @@ router.get('/counter',function(req,res){
 // Esta llamada recibe el webhook de la camara y lo guarda en json
 app.post('/', function (req, res) {
     var body = req.body;
-    console.log(body);
+    //console.log(body);
     var rule_name = body.rule_name;
     var event_time = body.event_time;
 
     console.log(rule_name, event_time);
 
     let rawdata = fs.readFileSync('counts.json');
-    let a = JSON.parse(rawdata);
+    let evento = JSON.parse(rawdata);
+    //console.log(evento);
+    // del array obtenido me quedo solo con las personas de los ultimo 20 minutos.
+    var date = new Date;
+    desde = date.getTime() - (20 * 60000);
+    hasta = date.getTime() + (20 * 60000);
+    result = evento.evento.filter(d => {var time = new Date(d.hora).getTime();
+        return (time > desde  && time < hasta);
+       });
+    let objeto = {
+        evento: result
+    };
+
+    var a = new Object();
+    a.salidas = 0;
+    a.entradas = 0;
 
     if(rule_name.includes('Salida'))
-        a.salidas = a.salidas + 1;
+        a.salidas = 1;
     else
-        a.entradas = a.entradas + 1;
+        a.entradas = 1;
+    a.hora = event_time;
+    
+    // push al elemento nuevo en el objeto filtrado
+    objeto.evento.push(a);
+    
+    //console.log(objeto.evento);
 
-    console.log(a);
-
-    let data = JSON.stringify(a);
+    //guardo el nuevo objeto
+    let data = JSON.stringify(objeto);
     fs.writeFileSync('counts.json', data);
 
     res.json({
@@ -51,21 +71,54 @@ app.post('/', function (req, res) {
     });
 });
 
+
+
+
 // Esta llamada retorna las entradas y salidas del json
 app.get('/', function (req, res) {
     let rawdata = fs.readFileSync('counts.json');
-    let a = JSON.parse(rawdata);
+    let eventos = JSON.parse(rawdata);
+        
+    var a = new Object();
+    a.salidas = 0;
+    a.entradas = 0;
+
+    var date = new Date;
+    desde = date.getTime() - (20 * 60000);
+    hasta = date.getTime() + (20 * 60000);
+    result = eventos.evento.filter(d => {var time = new Date(d.hora).getTime();
+        return (time > desde  && time < hasta);
+       });
+    let objeto = {
+        evento: result
+    };
+
+    objeto.evento.forEach(element => {
+        a.salidas = a.salidas + element.salidas;
+        a.entradas = a.entradas + element.entradas;
+    });
+
+    //console.log(a);
     res.json(a);
 });
 
 // Esta llamada resetea los contadores
 app.get('/reset', function (req, res) {
-    var a = new Object(); 
+    
+    var eventos = new Array();
+    var a = new Object();
     a.salidas = 0;
     a.entradas = 0;
-    let data = JSON.stringify(a);
+    a.hora = Date.now();
+    eventos.push(a)
+
+    let objeto = {
+        evento: eventos
+    };
+
+    let data = JSON.stringify(objeto);
     fs.writeFileSync('counts.json', data);
-    res.json(a);
+    res.json(objeto);
 });
 
 var server = app.listen(port, function () {

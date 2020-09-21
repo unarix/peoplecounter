@@ -15,7 +15,7 @@ html, body{
 }
 
 .row_picto{
-  margin-top: 10%;
+  margin-top: 15%;
   display: inline-block;
   text-align: center;
   width: 50%;
@@ -29,22 +29,22 @@ html, body{
 }
 
 .row_trad{
-  margin-top: 5%;
+  margin-top: 8%;
   display: inline-block;
   text-align: center;
   width: 68%;
 }
 
 .row_ocupation{
-  margin-top: 5%;
+  margin-top: 8%;
   display: inline-block;
   text-align: center;
-  width: 68%;
+  width: 80%;
 }
 
 .row_porcentaje
 {
-  font-size: 300%;
+  font-size: 700%;
 }
 
 .responsive {
